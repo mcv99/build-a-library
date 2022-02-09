@@ -10,10 +10,10 @@ console.log(storyWords);
 
 //filter out the unncessary words
 let betterWords = storyWords.filter((words) => {
-    if (!unnecessaryWords != words) {
-        return words;
-    };
+    return !unnecessaryWords.includes(words) //se imprimen todas las palabras que no esten en el array unnecessaryWords
 });
+
+console.log(betterWords);
 
 let overusedWordsCounter = [];
 
