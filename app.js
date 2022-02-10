@@ -16,29 +16,34 @@ let betterWords = storyWords.filter((words) => {
 console.log(betterWords);
 
 //how many time the user use the overused words
-let wordsOverused = betterWords.filter(word => {
-    return overusedWords.includes(word);
-    });
+let reallyCount = 0;
+let veryCount = 0;
+let basicallyCount = 0;
 
-console.log(wordsOverused.length);
+for (word of betterWords){
+    if (word === 'really') {
+        reallyCount++;
+    } else if (word === 'very') {
+        veryCount++;
+    } else if (word === 'basically') {
+        basicallyCount++;
+    }
+};
 
 //how many sentences are in the paragraph
-let sentencesCounter = 0;
-betterWords.forEach(piriod => {
-    if (piriod[piriod.length-1] === '.' || piriod[piriod.length-1] === '!') {
-        return sentencesCounter++;
+let sentences = 0;
+betterWords.forEach(sentence => {
+    if(sentence[sentence.length-1] === '.' || sentence[sentence.length-1] === '!') {
+        return sentences++;
     }
 });
 
-console.log(sentencesCounter);
+//console.log(sentencesCounter);
 
-//log son items to the console
-let itemsArr = ['The word count', 'The sentence count', 'The number of times eash overused word appears'];
-
-let printItemArr =
-    console.log('The word count: ' + storyWords.length);
-    console.log('The sentence count: ' + sentencesCounter);
-    console.log('The number of times each overused word appears: ' + wordsOverused.length);
+//log the items to the console
+    console.log('Word count: ' + betterWords.length);
+    console.log('Sentence count: ' + sentences);
+    console.log('Number of times overused words: ' + 'really => ' + reallyCount + ', very => ' + veryCount + ', basically => ' + basicallyCount);
 
 console.log(betterWords.join(' '));
 
