@@ -1,49 +1,137 @@
-let story = 'Last weekend, I took literally the most beautiful bike ride of my life. The route is called "The 9W to Nyack" and it actually stretches all the way from Riverside Park in Manhattan to South Nyack, New Jersey. It\'s really an adventure from beginning to end! It is a 48 mile loop and it basically took me an entire day. I stopped at Riverbank State Park to take some extremely artsy photos. It was a short stop, though, because I had a really long way left to go. After a quick photo op at the very popular Little Red Lighthouse, I began my trek across the George Washington Bridge into New Jersey.  The GW is actually very long - 4,760 feet! I was already very tired by the time I got to the other side.  An hour later, I reached Greenbrook Nature Sanctuary, an extremely beautiful park along the coast of the Hudson.  Something that was very surprising to me was that near the end of the route you actually cross back into New York! At this point, you are very close to the end.';
+class Media {
+    constructor(title) {
+        this._title = title;
+        this._isCheckedOut = false;
+        this._ratings = [];
+    }
 
-let overusedWords = ['really', 'very', 'basically'];
+    get title() {
+        return this._title;
+    }
 
-let unnecessaryWords = ['extremely', 'literally', 'actually' ];
+    get isCheckedOut() {
+        return this._isCheckedOut;
+    }
 
-//split the string story
-let storyWords = story.split(' ');
-console.log(storyWords);
+    get ratings() {
+        return this._ratings;
+    }
 
-//filter out the unncessary words
-let betterWords = storyWords.filter((words) => {
-    return !unnecessaryWords.includes(words) //se imprimen todas las palabras que no esten en el array unnecessaryWords
-});
+    set isCheckedOut(check) {
+        this._isCheckedOut = check;
+    }
 
-console.log(betterWords);
+    toggleCheckOutStatus(status) {
+        this._isCheckedOut = !status;
+    }
 
-//how many time the user use the overused words
-let reallyCount = 0;
-let veryCount = 0;
-let basicallyCount = 0;
+    getAverageRating() {
+        const ratingSum = this.ratings.reduce((acc, rating) => {
+            return acc + rating;
+        })
+        return ratingSum / this.ratings.length;
+    }
 
-for (word of betterWords){
-    if (word === 'really') {
-        reallyCount++;
-    } else if (word === 'very') {
-        veryCount++;
-    } else if (word === 'basically') {
-        basicallyCount++;
+    addRating(rating) {
+        this.ratings.push(rating);
     }
 };
 
-//how many sentences are in the paragraph
-let sentences = 0;
-betterWords.forEach(sentence => {
-    if(sentence[sentence.length-1] === '.' || sentence[sentence.length-1] === '!') {
-        return sentences++;
+
+class Book extends Media {
+    constructor(title, author, pages){
+        super(title);
+        this._author = author;
+        this._pages = pages;
     }
-});
 
-//console.log(sentencesCounter);
+    get author() {
+        return this._author;
+    }
 
-//log the items to the console
-    console.log('Word count: ' + betterWords.length);
-    console.log('Sentence count: ' + sentences);
-    console.log('Number of times overused words: ' + 'really => ' + reallyCount + ', very => ' + veryCount + ', basically => ' + basicallyCount);
+    get pages() {
+        return this._pages;
+    }
+};
 
-console.log(betterWords.join(' '));
+class Movie extends Media {
+    constructor(title, director, runTime) {
+        super(title);
+        this._director = director;
+        this._runTime = runTime;
+    }
 
+    get director() {
+        return this._director;
+    }
+
+    get runTime() {
+        return this._runTime;
+    }
+};
+
+class CD extends Media {
+    constructor(title, artist) {
+        super(title);
+        this._artist = artist;
+        this._songs = [];
+    }
+
+    get artist() {
+        return this._artist;
+    }
+
+    get songs() {
+        return this._songs;
+    }
+
+    shuffle() {
+        this._songs = ['Crawling', 'Instant Crush', 'Numb', 'BBNG', 'Space Song'];
+        const randomSong = Math.floor(Math.random() * 4);
+        return this.songs[randomSong];
+    }
+}
+
+
+//Instance of Book
+const historyOfEverything = new Book('Bill Bryson', 'A short hisotry of nearly Everuthing', 544);
+
+historyOfEverything.toggleCheckOutStatus();
+
+console.log(historyOfEverything.isCheckedOut);
+
+historyOfEverything.addRating(4);
+historyOfEverything.addRating(5);
+historyOfEverything.addRating(5);
+
+console.log(historyOfEverything.getAverageRating())
+
+
+
+//Instance of Movie
+const speed = new Movie('Jan de Bont', 'Speed', 116);
+
+speed.toggleCheckOutStatus();
+console.log(speed.isCheckedOut);
+
+speed.addRating(1);
+speed.addRating(1);
+speed.addRating(5);
+
+console.log(speed.getAverageRating());
+
+
+
+//Instance of CD
+const tomorrowDust = new CD('Augmented', 'Tame Impala');
+
+tomorrowDust.toggleCheckOutStatus();
+console.log(tomorrowDust.isCheckedOut);
+
+tomorrowDust.addRating(5);
+tomorrowDust.addRating(5);
+tomorrowDust.addRating(5);
+
+console.log(tomorrowDust.getAverageRating());
+
+console.log(tomorrowDust.shuffle());
